@@ -6,9 +6,9 @@ $database_type = 'mysql';
 $database_server = 'localhost';
 $database_connection_charset = 'utf8mb4';
 $table_prefix = 'modx_';
-$dbase = 'DB_NAME';            // ← имя базы данных
-$database_user = 'DB_USER';     // ← пользователь БД
-$database_password = 'DB_PASSWORD'; // ← пароль БД
+$dbase = '';
+$database_user = '';
+$database_password = '';
 $database_dsn = "mysql:host={$database_server};dbname={$dbase};charset={$database_connection_charset}";
 $config_options = array (
 );
@@ -23,35 +23,35 @@ $https_port = '443';
 $uuid = '688ed5f6-77ff-49de-b365-fd56f059ba5e';
 
 if (!defined('MODX_ASSETS_PATH')) {
-    $modx_assets_path= dirname(__DIR__, 2) . '/assets/';
+    $modx_assets_path= '/home/ti061721/touchit.vinnica.ua/improvision-modx/assets/';
     $modx_assets_url= '/assets/';
     define('MODX_ASSETS_PATH', $modx_assets_path);
     define('MODX_ASSETS_URL', $modx_assets_url);
 }
 if (!defined('MODX_BASE_PATH')) {
-    $modx_base_path= dirname(__DIR__, 2) . '/';
+    $modx_base_path= '/home/ti061721/touchit.vinnica.ua/improvision-modx/';
     $modx_base_url= '/';
     define('MODX_BASE_PATH', $modx_base_path);
     define('MODX_BASE_URL', $modx_base_url);
 }
 if (!defined('MODX_CONNECTORS_PATH')) {
-    $modx_connectors_path= dirname(__DIR__, 2) . '/connectors/';
+    $modx_connectors_path= '/home/ti061721/touchit.vinnica.ua/improvision-modx/connectors/';
     $modx_connectors_url= '/connectors/';
     define('MODX_CONNECTORS_PATH', $modx_connectors_path);
     define('MODX_CONNECTORS_URL', $modx_connectors_url);
 }
 if (!defined('MODX_CORE_PATH')) {
-    $modx_core_path= dirname(__DIR__) . '/';
+    $modx_core_path= '/home/ti061721/touchit.vinnica.ua/improvision-modx/core/';
     define('MODX_CORE_PATH', $modx_core_path);
 }
 if (!defined('MODX_MANAGER_PATH')) {
-    $modx_manager_path= dirname(__DIR__, 2) . '/manager/';
+    $modx_manager_path= '/home/ti061721/touchit.vinnica.ua/improvision-modx/manager/';
     $modx_manager_url= '/manager/';
     define('MODX_MANAGER_PATH', $modx_manager_path);
     define('MODX_MANAGER_URL', $modx_manager_url);
 }
 if (!defined('MODX_PROCESSORS_PATH')) {
-    $modx_processors_path= dirname(__DIR__) . '/src/Revolution/Processors/';
+    $modx_processors_path= '/home/ti061721/touchit.vinnica.ua/improvision-modx/core/src/Revolution/Processors/';
     define('MODX_PROCESSORS_PATH', $modx_processors_path);
 }
 

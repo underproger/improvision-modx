@@ -1,7 +1,7 @@
 import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.environ.get('IMPROVISION_STATIC', os.path.join(HERE, '..', '..', 'improvision'))) + '/'
-SITE = os.path.join(HERE, '..', 'site') + '/'
+SITE = os.path.join(HERE, '..') + '/'
 import json, re, sys
 sys.path.insert(0, HERE)
 from lexicon_src import UA, MANUAL

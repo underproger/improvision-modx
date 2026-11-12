@@ -2,11 +2,15 @@
 
 Готовый сайт на **MODX Revolution 3.1.2** с тремя языками (UA, EN, RU) и всем контентом из вёрстки.
 
+Репозиторий — это корень сайта (на сервере: `/home/ti061721/touchit.vinnica.ua/improvision-modx`).
+
 ```
-site/              корень сайта — это заливается на хостинг
-improvision.sql    дамп базы данных
-_dev/              скрипты, которыми сайт собран из вёрстки (на хостинг не нужны)
+core/, manager/, connectors/, assets/, index.php   сайт
+_dev/improvision.sql                              дамп базы данных
+_dev/*.php, *.py                                  скрипты, которыми сайт собран из вёрстки
 ```
+
+`_dev/`, `.git` и `README.md` закрыты от веба в `.htaccess`.
 
 Вёрстка (HTML/SCSS/JS) — в репозитории [underproger/improvision](https://github.com/underproger/improvision).
 
@@ -16,14 +20,17 @@ _dev/              скрипты, которыми сайт собран из �
 
 - PHP **8.1+** (pdo_mysql, gd, zip, curl, mbstring, dom, fileinfo)
 - MySQL 5.7+ / MariaDB 10.3+, кодировка `utf8mb4`
-- Apache с `mod_rewrite` (`.htaccess` уже в `site/`) или nginx (правила ниже)
+- Apache с `mod_rewrite` (`.htaccess` уже в корне) или nginx (правила ниже)
 
 ## Установка на хостинг
 
-1. Залить содержимое `site/` в корень сайта (`public_html` и т. п.).
-2. Создать базу (`utf8mb4_unicode_ci`) и импортировать `improvision.sql`.
-3. В `site/core/config/config.inc.php` вписать доступ к БД: `DB_NAME`, `DB_USER`, `DB_PASSWORD`
-   (и `$database_server`, если не `localhost`). Пути и домен определяются сами — больше ничего менять не нужно.
+1. Склонировать репозиторий в корень сайта: `/home/ti061721/touchit.vinnica.ua/improvision-modx`.
+   Под этот путь уже настроены `config.core.php` (в корне, `manager/`, `connectors/`) и пути в `core/config/config.inc.php`.
+2. Создать базу (`utf8mb4_unicode_ci`) и импортировать `_dev/improvision.sql`.
+3. В `core/config/config.inc.php` вписать доступ к БД: `$dbase`, `$database_user`, `$database_password`
+   (и `$database_server`, если не `localhost`). Домен определяется сам.
+   Файл в `.gitignore`, но в репозитории есть пустая версия — чтобы `git pull` не трогал ваши доступы, один раз выполнить:
+   `git update-index --skip-worktree core/config/config.inc.php`
 4. Права на запись: `core/cache/`, `core/export/`, `assets/img/` (загрузка картинок).
 5. Зайти в `/manager/` (логин `admin`, пароль передан отдельно) → сменить пароль →
    «Управление → Очистить кэш».
@@ -43,7 +50,8 @@ location / {
 location @modx {
     rewrite ^/(.*)$ /index.php?q=$1&$args last;
 }
-location ~ ^/core/ { deny all; }
+location ~ ^/(core|_dev)/ { deny all; }
+location ~ /\.git { deny all; }
 ```
 
 ## Как устроено
@@ -81,12 +89,12 @@ location ~ ^/core/ { deny all; }
 ### Код
 
 Шаблоны, чанки, сниппеты и плагин — статичные элементы, файлы лежат в
-`site/core/components/improvision/elements/`. Их можно править и в менеджере, и в файлах;
+`core/components/improvision/elements/`. Их можно править и в менеджере, и в файлах;
 после правки файла по FTP — очистить кэш. Шаблоны на Fenom (pdoTools), базовый макет — шаблон `Base`.
 
 CSS/JS — те же, что в вёрстке (`assets/css/main.css`, `assets/js/main.js`).
 После правок SCSS/JS в репозитории вёрстки: `npm run modx:assets` — собирает CSS и копирует
-`assets/` в `../improvision-modx/site/assets/` (репозитории лежат рядом).
+`assets/` в `../improvision-modx/assets/` (репозитории лежат рядом).
 
 ### Отличия от вёрстки
 

@@ -1,7 +1,7 @@
 <?php
 // CLI bootstrap for MODX API scripts (dev only)
 define('MODX_API_MODE', true);
-require __DIR__ . '/../site/config.core.php';
+require __DIR__ . '/../config.core.php';
 require MODX_CORE_PATH . 'vendor/autoload.php';
 use MODX\Revolution\modX;
 $modx = new modX();

@@ -5,7 +5,7 @@ Every resource: key, parent, template, alias, menuindex, flags + per-language fi
 import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.environ.get('IMPROVISION_STATIC', os.path.join(HERE, '..', '..', 'improvision'))) + '/'
-SITE = os.path.join(HERE, '..', 'site') + '/'
+SITE = os.path.join(HERE, '..') + '/'
 import json, re, copy
 from urllib.parse import unquote, urlparse, parse_qs
 from bs4 import BeautifulSoup, NavigableString, Tag

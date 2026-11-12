@@ -8,6 +8,11 @@
 # You may choose to make your URLs non-case-sensitive by adding a NC directive
 # to your rule: RewriteRule ^(.*)$ index.php?q=$1 [L,QSA,NC]
 
+# Repository files are not for the web: .git, _dev (DB dump, scripts), README
+RedirectMatch 404 /\.git
+RedirectMatch 404 ^/_dev(/|$)
+RedirectMatch 404 ^/README\.md$
+
 RewriteEngine On
 RewriteBase /
 
