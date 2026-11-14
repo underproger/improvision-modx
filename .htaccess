@@ -12,6 +12,7 @@
 RedirectMatch 404 /\.git
 RedirectMatch 404 ^/_dev(/|$)
 RedirectMatch 404 ^/README\.md$
+RedirectMatch 404 /\.user\.ini$
 
 RewriteEngine On
 RewriteBase /
