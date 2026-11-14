@@ -1,10 +1,10 @@
-{* Footer: socials, legal links, contacts, company menu, services menu, developer credit; then modal + script *}
+{* Footer: socials, legal links, contacts, company menu (top-level HTML pages), services menu, developer credit; then modal + script *}
 {set $exclude = [
   $_modx->config.site_start, $_modx->config['improvision.services_id'], $_modx->config['improvision.privacy_id'],
   $_modx->config['improvision.terms_id'], $_modx->config.error_page, $_modx->config['improvision.lead_id']
 ]}
 {set $company = $_modx->getResources(
-  ['parent' => 0, 'published' => 1, 'deleted' => 0, 'context_key' => $res.context_key, 'id:NOT IN' => $exclude],
+  ['parent' => 0, 'published' => 1, 'deleted' => 0, 'content_type' => 1, 'context_key' => $res.context_key, 'id:NOT IN' => $exclude],
   ['sortby' => 'menuindex', 'sortdir' => 'ASC', 'limit' => 0]
 )}
 {set $svcFoot = $_modx->getResources(

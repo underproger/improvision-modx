@@ -54,6 +54,10 @@ RewriteRule "/\.|^\.(?!well-known/)" - [F]
 #RewriteRule ^(.*)$ https://example.com/$1 [R=301,L]
 
 
+# Language versions share the files: /en/assets/… and /ru/assets/… → /assets/…
+# (the visual editor may save image paths relative to /en/ or /ru/)
+RewriteRule ^(?:en|ru)/(assets/.*)$ $1 [L]
+
 # The Friendly URLs part
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

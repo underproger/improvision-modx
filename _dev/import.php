@@ -66,7 +66,8 @@ foreach ($data as $r) {
             'isfolder' => $r['isfolder'],
             'searchable' => $r['key'] === 'globals' || $r['key'] === 'lead' ? 0 : 1,
             'cacheable' => $r['key'] === 'lead' ? 0 : 1,
-            'richtext' => 0,
+            // visual editor for pages whose «Вміст» is formatted text
+            'richtext' => in_array($r['template'], ['Про нас', 'Послуга', 'Проєкт', 'Стаття', 'Текстова сторінка'], true) ? 1 : 0,
             'createdby' => 1,
             'createdon' => time(),
             'publishedon' => $r['publishedon'] ? strtotime($r['publishedon']) : ($r['published'] ? time() : 0),

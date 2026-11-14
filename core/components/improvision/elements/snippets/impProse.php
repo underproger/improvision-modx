@@ -4,7 +4,10 @@
  *  - top-level <h2> get class "title" and an id (for the table of contents);
  *  - top-level headings, figures, quotes, callouts, checklists, summary boxes appear on scroll (data-reveal);
  *  - <ol class="step-list"> items appear one by one (data-stagger);
- *  - <img> get width/height (from the file) and loading="lazy".
+ *  - <img> get width/height (from the file) and loading="lazy";
+ *  - links and images: relative URLs (as the visual editor may save them) become absolute,
+ *    /en/assets/… and /ru/assets/… point to /assets/…; MODX tags like [[~5]] are kept intact;
+ *  - a space is kept after <br class="br-desk"> (the editor removes it, and the line break is hidden on phones).
  * &html — the HTML; &toc=1 — give h2 ids; &mode=toc — return only the table of contents (<li><a href="#id">…</a></li>).
  *
  * @var modX $modx
@@ -16,6 +19,43 @@ $withToc = $tocOnly || !empty($scriptProperties['toc']);
 if ($html === '') {
     return '';
 }
+
+// MODX tags ([[~5]], [[++site_url]] …) must survive the HTML parser untouched
+$tags = [];
+$html = preg_replace_callback('/\[\[(?:[^\[\]]++|(?R))*\]\]/', function ($m) use (&$tags) {
+    $tags[] = $m[0];
+    return 'imp-modx-tag-' . (count($tags) - 1) . '-x';
+}, $html);
+$restoreTags = function ($s) use (&$tags) {
+    return preg_replace_callback('/imp-modx-tag-(\d+)-x/', function ($m) use (&$tags) {
+        return $tags[(int)$m[1]] ?? $m[0];
+    }, $s);
+};
+
+// relative URL → absolute path from the current language root; assets always live at the site root
+$base = '/' . trim((string)$modx->getOption('base_url', null, '/'), '/') . '/';
+$base = $base === '//' ? '/' : $base;
+$fixUrl = function (string $url) use ($base): string {
+    $url = trim($url);
+    if ($url === '' || preg_match('#^([a-z][a-z0-9+.-]*:|//|\#|\?|imp-modx-tag-)#i', $url)) {
+        return $url;
+    }
+    if ($url[0] !== '/') {
+        $url = $base . $url;
+    }
+    $parts = [];
+    $path = strtok($url, '?#');
+    $tail = substr($url, strlen($path));
+    foreach (explode('/', $path) as $seg) {
+        if ($seg === '..') {
+            array_pop($parts);
+        } elseif ($seg !== '.') {
+            $parts[] = $seg;
+        }
+    }
+    $url = '/' . ltrim(implode('/', $parts), '/') . $tail;
+    return preg_replace('#^/(?:en|ru)/assets/#', '/assets/', $url);
+};
 
 $doc = new DOMDocument('1.0', 'UTF-8');
 $prev = libxml_use_internal_errors(true);
@@ -53,7 +93,7 @@ foreach (iterator_to_array($root->childNodes) as $node) {
             $node->setAttribute('class', 'title');
         }
         if ($withToc) {
-            $id = $node->getAttribute('id') ?: $slug($node->textContent);
+            $id = $node->getAttribute('id') ?: $slug(preg_replace('/imp-modx-tag-\d+-x/', '', $node->textContent));
             $base = $id;
             for ($n = 2; isset($usedIds[$id]); $n++) {
                 $id = $base . '-' . $n;
@@ -72,6 +112,14 @@ foreach (iterator_to_array($root->childNodes) as $node) {
     }
     if ($tag === 'ol' && $hasClass($node, 'step-list') && !$node->hasAttribute('data-stagger')) {
         $node->setAttribute('data-stagger', '');
+    }
+}
+
+foreach (['a' => 'href', 'img' => 'src', 'source' => 'src'] as $tagName => $attr) {
+    foreach ($root->getElementsByTagName($tagName) as $el) {
+        if ($el->hasAttribute($attr)) {
+            $el->setAttribute($attr, $fixUrl($el->getAttribute($attr)));
+        }
     }
 }
 
@@ -98,5 +146,8 @@ foreach ($root->childNodes as $child) {
 }
 // boolean attributes: data-reveal="" → data-reveal
 $out = str_replace(['data-reveal=""', 'data-stagger=""'], ['data-reveal', 'data-stagger'], $out);
+// the desktop-only line break is hidden on phones — words around it must stay apart
+$out = preg_replace('#(<br class="br-desk">)(?=[^\s<])#u', '$1 ', $out);
+$out = $restoreTags($out);
 
-return $tocOnly ? implode("\n", $toc) : $out;
+return $tocOnly ? $restoreTags(implode("\n", $toc)) : $out;
