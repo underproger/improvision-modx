@@ -23,7 +23,7 @@
 {set $ogImage = $res.og_image ?: ($res.image ?: 'assets/img/photos/hero.jpg')}
 {set $locales = ['uk' => 'uk_UA', 'en' => 'en_US', 'ru' => 'ru_UA']}
 <!DOCTYPE html>
-<html lang="{$lang}">
+<html lang="{$lang}"{block 'html_attrs'}{/block}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">

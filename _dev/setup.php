@@ -158,7 +158,8 @@ function staticElement($class, $nameField, $name, $file, $category, $extra = [])
     global $modx;
     $o = $modx->getObject($class, [$nameField => $name]) ?: $modx->newObject($class);
     $content = file_get_contents($file);
-    $rel = str_replace(MODX_CORE_PATH, '{core_path}', $file);
+    // [[++core_path]] is expanded by MODX when it reads a static element ({core_path} is not)
+    $rel = str_replace(MODX_CORE_PATH, '[[++core_path]]', $file);
     $o->fromArray(array_merge([
         $nameField => $name,
         'category' => $category,

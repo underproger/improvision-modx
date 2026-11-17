@@ -1,5 +1,7 @@
 {extends 'template:Base'}
 
+{block 'html_attrs'} class="page-home"{/block}
+
 {block 'header'}{include 'header' solid=0}{/block}
 
 {block 'preload'}
