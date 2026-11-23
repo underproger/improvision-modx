@@ -117,3 +117,13 @@ CSS/JS — те же, что в вёрстке (`assets/css/main.css`, `assets/j
 контент из собранной статики (`extract.py` → `data.json`) и загружают его (`import.php`).
 Статика берётся из соседней папки `../improvision` (или из пути в переменной `IMPROVISION_STATIC`).
 **`import.php` удаляет все ресурсы и создаёт их заново** — на живом сайте не запускать.
+
+## Перенос на прод (improvision.com.ua)
+
+1. Файлы — из git. Отдельно скопировать со staging то, чего нет в git:
+   `core/components/tinymcerte/`, `assets/components/tinymcerte/` (визуальный редактор, ставился через Установщик)
+   и файлы, загруженные через админку (`git status` на staging покажет их как untracked).
+2. `core/config/config.inc.php` и три `config.core.php` (корень, `manager/`, `connectors/`) — пути и доступ к базе прода.
+3. База — дамп прода (уже со всеми патчами из `_dev/patches/`).
+4. `.htaccess` уже содержит 301-редиректы со старых адресов WordPress (`/kfc/`, `/ua/…`, `/en/…`).
+5. Очистить кэш (папку `core/cache/`).

@@ -54,6 +54,43 @@ RewriteRule "/\.|^\.(?!well-known/)" - [F]
 #RewriteRule ^(.*)$ https://example.com/$1 [R=301,L]
 
 
+# Old site (WordPress, until 2026): Russian at /, Ukrainian at /ua/, English at /en/.
+# Its pages are sent to the same pages here, so search engines keep their links.
+RewriteRule ^ua/?$ / [R=301,L]
+# Russian at /
+RewriteRule ^(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ /ru/projects/$1/ [R=301,L]
+RewriteRule ^(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ /ru/services/outdoor/ [R=301,L]
+RewriteRule ^(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ /ru/services/interior/ [R=301,L]
+RewriteRule ^(?:vkhodnye-gruppy)/?$ /ru/services/entrance/ [R=301,L]
+RewriteRule ^(?:ventiliruemye-fasady|svetoprozrachnye-konstrukcii)/?$ /ru/services/facades/ [R=301,L]
+RewriteRule ^(?:design)/?$ /ru/services/design/ [R=301,L]
+RewriteRule ^(?:mebel-dlya-dizajnerov)/?$ /ru/services/construction/ [R=301,L]
+RewriteRule ^(?:about-us|vacancy)/?$ /ru/about/ [R=301,L]
+RewriteRule ^(?:achievements)/?$ /ru/projects/ [R=301,L]
+RewriteRule ^(?:info)/?$ /ru/blog/ [R=301,L]
+# Ukrainian at /ua/
+RewriteRule ^ua/(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ /projects/$1/ [R=301,L]
+RewriteRule ^ua/(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ /services/outdoor/ [R=301,L]
+RewriteRule ^ua/(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ /services/interior/ [R=301,L]
+RewriteRule ^ua/(?:vkhodnye-gruppy)/?$ /services/entrance/ [R=301,L]
+RewriteRule ^ua/(?:ventiliruemye-fasady|svetoprozrachnye-konstrukcii)/?$ /services/facades/ [R=301,L]
+RewriteRule ^ua/(?:design)/?$ /services/design/ [R=301,L]
+RewriteRule ^ua/(?:mebel-dlya-dizajnerov)/?$ /services/construction/ [R=301,L]
+RewriteRule ^ua/(?:about-us|vacancy)/?$ /about/ [R=301,L]
+RewriteRule ^ua/(?:achievements)/?$ /projects/ [R=301,L]
+RewriteRule ^ua/(?:info)/?$ /blog/ [R=301,L]
+# English at /en/
+RewriteRule ^en/(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ /en/projects/$1/ [R=301,L]
+RewriteRule ^en/(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ /en/services/outdoor/ [R=301,L]
+RewriteRule ^en/(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ /en/services/interior/ [R=301,L]
+RewriteRule ^en/(?:vkhodnye-gruppy)/?$ /en/services/entrance/ [R=301,L]
+RewriteRule ^en/(?:ventiliruemye-fasady|svetoprozrachnye-konstrukcii)/?$ /en/services/facades/ [R=301,L]
+RewriteRule ^en/(?:design)/?$ /en/services/design/ [R=301,L]
+RewriteRule ^en/(?:mebel-dlya-dizajnerov)/?$ /en/services/construction/ [R=301,L]
+RewriteRule ^en/(?:about-us|vacancy)/?$ /en/about/ [R=301,L]
+RewriteRule ^en/(?:achievements)/?$ /en/projects/ [R=301,L]
+RewriteRule ^en/(?:info)/?$ /en/blog/ [R=301,L]
+
 # Language versions share the files: /en/assets/… and /ru/assets/… → /assets/…
 # (the visual editor may save image paths relative to /en/ or /ru/)
 RewriteRule ^(?:en|ru)/(assets/.*)$ $1 [L]
