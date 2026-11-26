@@ -54,21 +54,21 @@ RewriteRule "/\.|^\.(?!well-known/)" - [F]
 #RewriteRule ^(.*)$ https://example.com/$1 [R=301,L]
 
 
-# Old site (WordPress, until 2026): Russian at /, Ukrainian at /ua/, English at /en/.
-# Its pages are sent to the same pages here, so search engines keep their links.
+# Old site (WordPress, until 2026): Russian was the main language at /, Ukrainian at /ua/, English at /en/.
+# Here Ukrainian is the main language at /, Russian is at /ru/. Old pages go to the same pages here.
 RewriteRule ^ua/?$ / [R=301,L]
-# Russian at /
-RewriteRule ^(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ /ru/projects/$1/ [R=301,L]
-RewriteRule ^(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ /ru/services/outdoor/ [R=301,L]
-RewriteRule ^(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ /ru/services/interior/ [R=301,L]
-RewriteRule ^(?:vkhodnye-gruppy)/?$ /ru/services/entrance/ [R=301,L]
-RewriteRule ^(?:ventiliruemye-fasady|svetoprozrachnye-konstrukcii)/?$ /ru/services/facades/ [R=301,L]
-RewriteRule ^(?:design)/?$ /ru/services/design/ [R=301,L]
-RewriteRule ^(?:mebel-dlya-dizajnerov)/?$ /ru/services/construction/ [R=301,L]
-RewriteRule ^(?:about-us|vacancy)/?$ /ru/about/ [R=301,L]
-RewriteRule ^(?:achievements)/?$ /ru/projects/ [R=301,L]
-RewriteRule ^(?:info)/?$ /ru/blog/ [R=301,L]
-# Ukrainian at /ua/
+# Russian: /… (and /ru/…) → /ru/…
+RewriteRule ^(?:ru/)?(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ /ru/projects/$1/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ /ru/services/outdoor/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ /ru/services/interior/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:vkhodnye-gruppy)/?$ /ru/services/entrance/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:ventiliruemye-fasady|svetoprozrachnye-konstrukcii)/?$ /ru/services/facades/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:design)/?$ /ru/services/design/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:mebel-dlya-dizajnerov)/?$ /ru/services/construction/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:about-us|vacancy)/?$ /ru/about/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:achievements)/?$ /ru/projects/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:info)/?$ /ru/blog/ [R=301,L]
+# Ukrainian: /ua/… → /…
 RewriteRule ^ua/(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ /projects/$1/ [R=301,L]
 RewriteRule ^ua/(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ /services/outdoor/ [R=301,L]
 RewriteRule ^ua/(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ /services/interior/ [R=301,L]
@@ -79,7 +79,7 @@ RewriteRule ^ua/(?:mebel-dlya-dizajnerov)/?$ /services/construction/ [R=301,L]
 RewriteRule ^ua/(?:about-us|vacancy)/?$ /about/ [R=301,L]
 RewriteRule ^ua/(?:achievements)/?$ /projects/ [R=301,L]
 RewriteRule ^ua/(?:info)/?$ /blog/ [R=301,L]
-# English at /en/
+# English: /en/… → /en/…
 RewriteRule ^en/(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ /en/projects/$1/ [R=301,L]
 RewriteRule ^en/(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ /en/services/outdoor/ [R=301,L]
 RewriteRule ^en/(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ /en/services/interior/ [R=301,L]
