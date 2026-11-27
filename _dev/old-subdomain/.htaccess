@@ -1,0 +1,57 @@
+# old.improvision.com.ua — copy of the old WordPress site, removed.
+# Every address goes to the same page on improvision.com.ua (301), the rest to its home page.
+# Put this file in the root folder of the subdomain; the folder can be otherwise empty.
+
+Options -Indexes
+RewriteEngine On
+RewriteBase /
+
+# Let's Encrypt must reach the subdomain itself, or its SSL certificate stops renewing
+RewriteRule ^\.well-known/ - [L]
+
+# robots.txt of the main site (allows crawling, so search engines see these redirects)
+RewriteRule ^robots\.txt$ https://improvision.com.ua/robots.txt [R=301,L]
+
+# home pages (WordPress ?p=… links go to the home page too)
+RewriteRule ^(?:ru/?)?$ https://improvision.com.ua/ru/? [R=301,L]
+RewriteRule ^ua/?$ https://improvision.com.ua/? [R=301,L]
+RewriteRule ^en/?$ https://improvision.com.ua/en/? [R=301,L]
+
+# Russian: /… and /ru/… → /ru/…
+RewriteRule ^(?:ru/)?(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ https://improvision.com.ua/ru/projects/$1/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ https://improvision.com.ua/ru/services/outdoor/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ https://improvision.com.ua/ru/services/interior/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:vkhodnye-gruppy)/?$ https://improvision.com.ua/ru/services/entrance/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:ventiliruemye-fasady|svetoprozrachnye-konstrukcii)/?$ https://improvision.com.ua/ru/services/facades/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:design)/?$ https://improvision.com.ua/ru/services/design/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:mebel-dlya-dizajnerov)/?$ https://improvision.com.ua/ru/services/construction/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:about-us|vacancy)/?$ https://improvision.com.ua/ru/about/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:achievements)/?$ https://improvision.com.ua/ru/projects/ [R=301,L]
+RewriteRule ^(?:ru/)?(?:info)/?$ https://improvision.com.ua/ru/blog/ [R=301,L]
+
+# Ukrainian: /ua/… → /…
+RewriteRule ^ua/(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ https://improvision.com.ua/projects/$1/ [R=301,L]
+RewriteRule ^ua/(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ https://improvision.com.ua/services/outdoor/ [R=301,L]
+RewriteRule ^ua/(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ https://improvision.com.ua/services/interior/ [R=301,L]
+RewriteRule ^ua/(?:vkhodnye-gruppy)/?$ https://improvision.com.ua/services/entrance/ [R=301,L]
+RewriteRule ^ua/(?:ventiliruemye-fasady|svetoprozrachnye-konstrukcii)/?$ https://improvision.com.ua/services/facades/ [R=301,L]
+RewriteRule ^ua/(?:design)/?$ https://improvision.com.ua/services/design/ [R=301,L]
+RewriteRule ^ua/(?:mebel-dlya-dizajnerov)/?$ https://improvision.com.ua/services/construction/ [R=301,L]
+RewriteRule ^ua/(?:about-us|vacancy)/?$ https://improvision.com.ua/about/ [R=301,L]
+RewriteRule ^ua/(?:achievements)/?$ https://improvision.com.ua/projects/ [R=301,L]
+RewriteRule ^ua/(?:info)/?$ https://improvision.com.ua/blog/ [R=301,L]
+
+# English: /en/… → /en/…
+RewriteRule ^en/(kfc|lego|carnegie-center|intimissimi|calzedonia|globus-bank|domosfera|sun-gallery|vittorio-spernanzoni|arbat-prestige|baldessarini|yus-bar|alsace|cc|hooligan)/?$ https://improvision.com.ua/en/projects/$1/ [R=301,L]
+RewriteRule ^en/(?:naruzhnaya-reklama|vyveska|obemnye-bukvy|kryshnye-ystanovki|brandmaueryi|diodnye-ekrany|lajtboksy|bannery|reklamnye-paneli|plotternaya-porezka|lazernaya-rezka|frezernaya-porezka)/?$ https://improvision.com.ua/en/services/outdoor/ [R=301,L]
+RewriteRule ^en/(?:interernaya-reklama|tablichki|akrilajty|frejmlajty|izdeliya-iz-akrila|pos-materialy|torgovoe-oborudovanie)/?$ https://improvision.com.ua/en/services/interior/ [R=301,L]
+RewriteRule ^en/(?:vkhodnye-gruppy)/?$ https://improvision.com.ua/en/services/entrance/ [R=301,L]
+RewriteRule ^en/(?:ventiliruemye-fasady|svetoprozrachnye-konstrukcii)/?$ https://improvision.com.ua/en/services/facades/ [R=301,L]
+RewriteRule ^en/(?:design)/?$ https://improvision.com.ua/en/services/design/ [R=301,L]
+RewriteRule ^en/(?:mebel-dlya-dizajnerov)/?$ https://improvision.com.ua/en/services/construction/ [R=301,L]
+RewriteRule ^en/(?:about-us|vacancy)/?$ https://improvision.com.ua/en/about/ [R=301,L]
+RewriteRule ^en/(?:achievements)/?$ https://improvision.com.ua/en/projects/ [R=301,L]
+RewriteRule ^en/(?:info)/?$ https://improvision.com.ua/en/blog/ [R=301,L]
+
+# everything else (images, wp-admin, feeds, ?p=…) → home page
+RewriteRule ^ https://improvision.com.ua/? [R=301,L]
