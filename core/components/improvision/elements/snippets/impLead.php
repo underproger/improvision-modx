@@ -57,12 +57,12 @@ if ($errors) {
     return $respond(422, ['success' => false, 'errors' => $errors]);
 }
 
-// simple flood protection: one request per 10 seconds per session
+// simple flood protection: one sent lead per 10 seconds per session
+// (only a sent lead counts, so a failed attempt can be repeated right away)
 $now = time();
 if (!empty($_SESSION['imp_lead_time']) && $now - (int)$_SESSION['imp_lead_time'] < 10) {
     return $respond(429, ['success' => false, 'message' => 'Too many requests']);
 }
-$_SESSION['imp_lead_time'] = $now;
 
 $labels = [
     'name' => "Ім'я", 'phone' => 'Телефон', 'email' => 'Email', 'service' => 'Послуга',
@@ -101,11 +101,22 @@ if ($data['email'] !== '') {
 }
 $mail->setHTML(true);
 $sent = $recipients ? $mail->send() : false;
-if (!$sent) {
-    $modx->log(modX::LOG_LEVEL_ERROR, '[impLead] Could not send lead e-mail: ' . $mail->mailer->ErrorInfo);
-}
+$mailError = $recipients ? (string)$mail->mailer->ErrorInfo : 'No recipients: system setting improvision.lead_email is empty';
 $mail->reset();
 
-return $sent
-    ? $respond(200, ['success' => true])
-    : $respond(500, ['success' => false, 'message' => 'Mail error']);
+if ($sent) {
+    $_SESSION['imp_lead_time'] = $now;
+    return $respond(200, ['success' => true]);
+}
+
+// the reason goes to the MODX error log and to the copy of the lead
+$modx->log(modX::LOG_LEVEL_ERROR, '[impLead] Could not send lead e-mail: ' . $mailError);
+if (is_dir($dir)) {
+    @file_put_contents($dir . date('Y-m') . '.log', '[' . date('Y-m-d H:i:s') . '] MAIL NOT SENT: ' . $mailError . "\n\n", FILE_APPEND | LOCK_EX);
+}
+$answer = ['success' => false, 'message' => 'Mail error'];
+// a manager user logged in in the same browser sees the reason in the response (DevTools → Network)
+if ($modx->user && $modx->user->isAuthenticated('mgr')) {
+    $answer['debug'] = $mailError;
+}
+return $respond(500, $answer);
